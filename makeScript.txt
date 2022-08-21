@@ -1,1 +1,0 @@
-/usr/bin/g++ -lncurses tinyConsoleApp.cpp SnakeGame.cpp
