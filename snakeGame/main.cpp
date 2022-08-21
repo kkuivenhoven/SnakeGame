@@ -83,8 +83,8 @@ int main() {
 				player.inchSnake();
 				wrefresh(win); */
 				if(isGameMode) {
-					// do { 
-					while(1) {
+					do { 
+					// while(1) {
 						player.displaySnake();
 						wrefresh(win);
 						playChar = player.moveSnake();
@@ -92,7 +92,7 @@ int main() {
 
 						// if((playChar != KEY_UP) && (playChar != KEY_DOWN) 
 							// && (playChar != KEY_LEFT) && (playChar != KEY_RIGHT)) {
-						player.inchSnake();
+						// player.inchSnake();
 							// player.generateFruit();
 						// }
 						
@@ -103,7 +103,7 @@ int main() {
 						if((playChar != 'q') && (isGameOver != true)) {
 							break;
 						}
-					} // while((playChar != 'q') && (isGameOver != true));
+					} while((playChar != 'q') && (isGameOver != true));
 					// player.generateFruit();
 					ch = playChar;
 				}
