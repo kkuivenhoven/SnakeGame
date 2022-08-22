@@ -23,6 +23,7 @@ void Player::initPlayer(WINDOW *win, int y, int x, char c) {
 	m_isSnakeMovingUp = false;
 	m_curScore.initScore();
 	m_isInit = true;
+	m_startTime = clock();
 }
 
 bool Player::isInit() { return m_isInit; }
@@ -198,6 +199,15 @@ void Player::writeScore() {
 
 map<int, string> Player::getHighScores() {
 	return m_curScore.getHighestScore();
+}
+
+
+void Player::setStartTime() {
+	double time  = ((double)(clock() - m_startTime) / CLOCKS_PER_SEC);
+	if(time >= 1) {
+		m_startTime = clock();
+		moveRight();
+	}
 }
 
 

@@ -34,6 +34,7 @@ class Player {
 	bool m_isSnakeMovingUp;
 
 	bool m_isInit;
+	clock_t m_startTime;
 
 	public:
 		// Player(WINDOW *win, int y, int x, char c);
@@ -67,6 +68,8 @@ class Player {
 		void inchSnake();
 		void printChar(char playChar);
 		bool isInit();
+
+		void setStartTime();
 };
 
 #endif

@@ -77,26 +77,14 @@ int main() {
 					player.generateFruit();
 				}
 
-				/* player.displaySnake();
-				player.generateFruit();
-				playChar = player.moveSnake();
-				player.inchSnake();
-				wrefresh(win); */
 				if(isGameMode) {
 					do { 
-					// while(1) {
+						player.setStartTime();
 						player.displaySnake();
 						wrefresh(win);
 						playChar = player.moveSnake();
 						isGameOver = player.getGameOverBoolean();
 
-						// if((playChar != KEY_UP) && (playChar != KEY_DOWN) 
-							// && (playChar != KEY_LEFT) && (playChar != KEY_RIGHT)) {
-						// player.inchSnake();
-							// player.generateFruit();
-						// }
-						
-						// player.generateFruit();
 						if(player.snakeHitFruit()) {
 							player.generateFruit();
 						}
@@ -104,7 +92,6 @@ int main() {
 							break;
 						}
 					} while((playChar != 'q') && (isGameOver != true));
-					// player.generateFruit();
 					ch = playChar;
 				}
 					
