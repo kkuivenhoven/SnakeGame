@@ -37,10 +37,7 @@ class Player {
 	clock_t m_startTime;
 
 	public:
-		// Player(WINDOW *win, int y, int x, char c);
-		// ~Player();
 		Player();
-		// ~Player();
 
 		void initPlayer(WINDOW *win, int y, int x, char c);
 
@@ -65,7 +62,6 @@ class Player {
 		void clearFruit();
 		map<int, string> getHighScores();
 
-		void inchSnake();
 		void printChar(char playChar);
 		bool isInit();
 

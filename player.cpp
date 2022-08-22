@@ -1,13 +1,6 @@
 #include "player.h"
 
-// Player::Player(WINDOW *win, int y, int x, char c) {
 Player::Player() {
-	/* m_curwin = win;
-	m_yLoc = y;
-	m_xLoc = x;
-	getmaxyx(m_curwin, m_yMax, m_xMax);
-	m_character = c;
-	m_gameover = false; */
 }
 
 void Player::initPlayer(WINDOW *win, int y, int x, char c) {
@@ -17,7 +10,7 @@ void Player::initPlayer(WINDOW *win, int y, int x, char c) {
 	getmaxyx(m_curwin, m_yMax, m_xMax);
 	m_character = c;
 	m_gameover = false;
-	m_isSnakeMovingDown = false;
+	m_isSnakeMovingDown = true;
 	m_isSnakeMovingRight = false;
 	m_isSnakeMovingLeft = false;
 	m_isSnakeMovingUp = false;
@@ -36,9 +29,11 @@ void Player::resetAllProperties() {
 	m_gameover = false;
 }
 
+
 void Player::setSnakeCharacter() {
 	m_character = '@';
 }
+
 
 bool Player::getGameOverBoolean() {
 	return m_gameover;
@@ -67,11 +62,11 @@ void Player::printSpace() {
 
 void Player::moveUp() {
 	// coordinate system moves from top down
+	printSpace();
 	mvwaddch(m_curwin, m_yLoc, m_xLoc, ' ');
 	m_yLoc--;
 	if(m_yLoc < 1) { 
 		m_gameover = true;	
-		// m_yLoc = 1;
 	} 
 	m_isSnakeMovingUp = true;
 	m_isSnakeMovingDown = false;
@@ -81,11 +76,11 @@ void Player::moveUp() {
 
 
 void Player::moveDown() {
+	printSpace();
 	mvwaddch(m_curwin, m_yLoc, m_xLoc, ' ');
 	m_yLoc++;
 	if(m_yLoc > m_yMax-2) { 
 		m_gameover = true;	
-		// m_yLoc = m_yMax - 2;
 	} 
 	m_isSnakeMovingUp = false;
 	m_isSnakeMovingDown = true;
@@ -95,11 +90,11 @@ void Player::moveDown() {
 
 
 void Player::moveLeft() {
+	printSpace();
 	mvwaddch(m_curwin, m_yLoc, m_xLoc, ' ');
 	m_xLoc--;
 	if(m_xLoc < 1) {
 		m_gameover = true;	
-		// m_xLoc = 1;
 	} 
 	m_isSnakeMovingUp = false;
 	m_isSnakeMovingDown = false;
@@ -109,12 +104,11 @@ void Player::moveLeft() {
 
 
 void Player::moveRight() {
-	// printSpace();
+	printSpace();
 	mvwaddch(m_curwin, m_yLoc, m_xLoc, ' ');
 	m_xLoc++;
 	if(m_xLoc > m_xMax - 2) {
 		m_gameover = true;	
-		// m_xLoc = m_xMax - 2;
 	} 
 	m_isSnakeMovingUp = false;
 	m_isSnakeMovingDown = false;
@@ -146,7 +140,8 @@ int Player::moveSnake() {
 
 
 void Player::storeCoords() {
-	if(snakeCoords.size() == 3) {
+	// if(snakeCoords.size() == 3) {
+	if(snakeCoords.size() == 5) {
 		formerSnakePrint.first = snakeCoords.at(0).first;
 		formerSnakePrint.second = snakeCoords.at(0).second;
 		snakeCoords.erase(snakeCoords.begin());	
@@ -160,14 +155,15 @@ void Player::storeCoords() {
 
 void Player::displaySnake() {
 	mvwaddch(m_curwin, m_yLoc, m_xLoc, m_character);
-	/* if(snakeCoords.size() == 3) {
-		 for(std::vector<pair<int, int> >::iterator it 
-			= snakeCoords.begin(); it != snakeCoords.end(); it++) {
-		 mvwaddch(m_curwin, it->first, it->second, m_character);
+	// if(snakeCoords.size() == 3) {
+	if(snakeCoords.size() == 5) {
+		 for(std::vector<pair<int, int> >::iterator it = snakeCoords.begin(); 
+																					it != snakeCoords.end(); it++) {
+			 mvwaddch(m_curwin, it->first, it->second, m_character);
 		 }
-		 } else {
+	 } else {
 		 mvwaddch(m_curwin, m_yLoc, m_xLoc, m_character);
-		 } */
+	 }
 }
 
 
@@ -204,31 +200,20 @@ map<int, string> Player::getHighScores() {
 
 void Player::setStartTime() {
 	double time  = ((double)(clock() - m_startTime) / CLOCKS_PER_SEC);
-	if(time >= 1) {
+	if(time >= 0.25) {
 		m_startTime = clock();
-		moveRight();
-	}
-}
-
-
-void Player::inchSnake() {
-	// if(m_isSnakeMovingDown) {
-	// 	moveDown();
-		string xLoc_str = to_string(m_xLoc);
-		char const *xLoc_char = xLoc_str.c_str();
-		string yLoc_str = to_string(m_yLoc);
-		char const *yLoc_char = yLoc_str.c_str();
-		mvwaddstr(m_curwin, 10, 10, xLoc_char);
-		mvwaddstr(m_curwin, 12, 12, yLoc_char);
-	// }
-	if(m_isSnakeMovingRight) {
-		// moveRight();
-	}
-	if(m_isSnakeMovingLeft) {
-		// moveLeft();
-	}
-	if(m_isSnakeMovingUp) {
-		// moveUp();
+		if(m_isSnakeMovingDown) {
+			moveDown();
+		}
+		if(m_isSnakeMovingRight) {
+			moveRight();
+		}
+		if(m_isSnakeMovingLeft) {
+			moveLeft();
+		}
+		if(m_isSnakeMovingUp) {
+			moveUp();
+		}
 	}
 }
 
